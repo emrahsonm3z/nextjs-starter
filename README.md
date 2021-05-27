@@ -452,3 +452,46 @@ module.exports = withPlugins(
   })
 )
 ```
+
+### Using custom env file path
+
+```
+yarn add env-cmd
+```
+
+**package.json**:
+
+```
+    "dev": "env-cmd -f .env.development next dev",
+    "build:dev": "env-cmd -f .env.development next build",
+    "build:stage": "env-cmd -f .env.staging next build",
+    "build:prod": "env-cmd -f .env.production next build",
+    "start:stage": "env-cmd -f .env.staging next start",
+    "start": "env-cmd -f .env.production next start",
+```
+
+### Enabled webpack bundle analyzer
+
+```
+yarn add @next/bundle-analyzer
+```
+
+**package.json**:
+
+```
+"analyze": "cross-env ANALYZE=true next build",
+    "analyze:server": "cross-env BUNDLE_ANALYZE=server next build",
+    "analyze:browser": "cross-env BUNDLE_ANALYZE=browser next build"
+```
+
+**next.config.js**:
+
+```
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true'
+})
+
+module.exports = withPlugins(
+  [[withBundleAnalyzer]],
+  ....)
+```
